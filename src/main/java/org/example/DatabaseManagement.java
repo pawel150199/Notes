@@ -1,7 +1,9 @@
 package org.example;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManagement {
+    // If create database please use create method in other cases use execute method
     public Connection connect() {
         String url = "jdbc:mariadb://localhost:3306/mysql";
 
@@ -35,12 +37,46 @@ public class DatabaseManagement {
         }
         return con;
     }
+    public void create(String q, Connection con) {
+        try {
+            Statement statement = con.createStatement();
+            statement.executeQuery(q);
+            System.out.println("Statement executed!");
+        } 
+        catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    public ArrayList <String> check_database(String q, Connection con) {
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(q);
+            System.out.println("Statement executed!");
+            ArrayList<String> database = new ArrayList<String>();
+
+            while (rs.next()) {
+                database.add(rs.getString(1));
+            }
+            return database;
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
     public void execute(String q, Connection con) {
         try {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(q);
-            System.out.println(rs);
             System.out.println("Statement executed!");
+            while (rs.next()) {
+                int noteid = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                String email = rs.getString(4);
+                String date = rs.getString(5);
+                System.out.println(noteid + ", " + title + ", " + author + ", " + email + ", " + date);
+            }
         } 
         catch (Exception e) {
             System.err.println(e);
