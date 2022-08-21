@@ -1,11 +1,8 @@
 package org.example;
 import java.sql.*;
-import java.util.logging.Logger;
-class ConnectLogger {
-    private final static Logger LOGGER = Logger.getLogger()
-}
-public class Connect {
-    public static void main(String args[]) {
+
+public class DatabaseManagement {
+    public Connection connect() {
         String url = "jdbc:mariadb://localhost:3306/mysql";
 
         // Database credentials
@@ -22,19 +19,39 @@ public class Connect {
         // Try to connect to database
         try {
             con = DriverManager.getConnection(url, user, pass);
-            Statement statement = con.createStatement();
-
             System.out.println("Connecting to database... ");
 
             if (con != null) {
                 System.out.println("Connected to database");
+                return con;
             }
             else {
-                System.out.println("Not connected");
+                System.out.println("Not connected!");
             }
         }
         catch (Exception e)
         {
+            System.err.println(e);
+        }
+        return con;
+    }
+    public void execute(String q, Connection con) {
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(q);
+            System.out.println(rs);
+            System.out.println("Statement executed!");
+        } 
+        catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public void disconect(Connection con) {
+        try {
+            con.close();
+            System.out.println("Connection closed!");
+        } catch (Exception e) {
             System.err.println(e);
         }
     }
