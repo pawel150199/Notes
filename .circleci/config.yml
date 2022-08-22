@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:17.0.1
+      - image: cimg/mariadb:10.6
+       
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - run:
+          name: build java application
+          command: |
+          ./gradlew build
+          java Main.java
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/artifacts/
+          path: build/test-results/test
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
