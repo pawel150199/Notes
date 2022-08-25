@@ -1,4 +1,4 @@
-package org.gui;
+package org.learnGUI;
 import java.util.HashMap;
 
 public class Test {

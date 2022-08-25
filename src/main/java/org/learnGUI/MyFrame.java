@@ -1,4 +1,4 @@
-package org.gui;
+package org.learnGUI;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.plaf.ColorUIResource;

@@ -1,4 +1,4 @@
-package org.gui;
+package org.learnGUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,9 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class NewMyFrame extends JFrame{
+public class Buttons extends JFrame{
     JButton button;
-    NewMyFrame() {
+    Buttons() {
         ImageIcon image = new ImageIcon("logo.png");
 
         button = new JButton();

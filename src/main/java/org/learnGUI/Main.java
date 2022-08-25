@@ -1,4 +1,4 @@
-package org.gui;
+package org.learnGUI;
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
